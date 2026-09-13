@@ -1,8 +1,14 @@
-# NET WORLD SHIPPING - Modern Shipment Tracking System
+# NET WORLD SHIPPING - Shipment Tracking System
 
 A private repository: `networldshipping-spec/networldshipping` (intended to be private for the shipping company)
 
-A full-stack shipment tracking application with PostgreSQL database integration, admin panel, receipt generation, and email notification system for NET WORLD SHIPPING company.
+A shipment tracking application with a static frontend, Firebase Firestore backend, Vercel deployment, admin panel, receipt generation, and notification management.
+
+## Firebase and Vercel
+
+The production deployment uses Vercel for the existing HTML/CSS/JavaScript frontend and the serverless API in `api/index.js`. Firestore stores shipments, tracking events, notifications, and conversations. File uploads remain disabled until Firebase Storage is enabled.
+
+See [FIREBASE_VERCEL_SETUP.md](FIREBASE_VERCEL_SETUP.md) for project setup, one-time data migration, required environment variables, and deployment commands.
 
 ## 🚀 Features
 
