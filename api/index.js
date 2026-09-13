@@ -107,8 +107,10 @@ app.get('/api/tracking/:trackingNumber', async (req, res) => {
     try {
         const shipment = await shipmentByTracking(req.params.trackingNumber);
         if (!shipment) return res.status(404).json({ success: false, error: 'Tracking number not found' });
-        const events = await db.collection('tracking_events').where('shipment_id', '==', shipment.data().id).orderBy('event_date', 'desc').get();
-        res.json({ success: true, data: { shipment: shipmentData(shipment), timeline: events.docs.map(doc => serialize({ ...doc.data(), id: doc.data().id ?? doc.id })) } });
+        const events = await db.collection('tracking_events').where('shipment_id', '==', shipment.data().id).get();
+        const timeline = events.docs.map(doc => serialize({ ...doc.data(), id: doc.data().id ?? doc.id }));
+        timeline.sort((left, right) => new Date(right.event_date || 0) - new Date(left.event_date || 0));
+        res.json({ success: true, data: { shipment: shipmentData(shipment), timeline } });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
